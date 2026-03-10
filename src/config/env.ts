@@ -1,3 +1,5 @@
+import "dotenv/config";
+
 interface IENV {
   PORT: string;
   DATABASE_URL: string;
