@@ -3,8 +3,8 @@ import env from "./env";
 
 const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
-  port: 587,
-  secure: false,
+  port: env.NODE_ENV === "production" ? 465 : 587,
+  secure: env.NODE_ENV === "production" ? true : false,
   auth: {
     user: env.NODEMAILER_USER,
     pass: env.NODEMAILER_PASS,
