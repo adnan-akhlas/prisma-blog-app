@@ -1,0 +1,31 @@
+import { Request, Response } from "express";
+import catchAsync from "../../util/catchAsync";
+import sendResponse from "../../util/sendResponse";
+import * as postService from "./post.service";
+
+const createPost = catchAsync(
+  async (req: Request, res: Response): Promise<void> => {
+    const body = req.body;
+    const data = await postService.insertPostIntoDb(body);
+    sendResponse(res, {
+      status: 201,
+      success: true,
+      message: "Post created successfully.",
+      data,
+    });
+  },
+);
+
+const getPosts = catchAsync(
+  async (req: Request, res: Response): Promise<void> => {
+    const data = await postService.getPostsFromDb();
+    sendResponse(res, {
+      status: 200,
+      success: true,
+      message: "Posts retrieved successfully.",
+      data,
+    });
+  },
+);
+
+export { createPost, getPosts };
