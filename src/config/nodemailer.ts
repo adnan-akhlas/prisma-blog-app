@@ -1,0 +1,14 @@
+import nodemailer from "nodemailer";
+import env from "./env";
+
+const transporter = nodemailer.createTransport({
+  host: "smtp.gmail.com",
+  port: 587,
+  secure: false,
+  auth: {
+    user: env.NODEMAILER_USER,
+    pass: env.NODEMAILER_PASS,
+  },
+});
+
+export default transporter;
