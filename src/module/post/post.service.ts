@@ -1,10 +1,17 @@
 import { Post } from "@prisma/client";
 import { prisma } from "../../lib/prisma";
 import { TCreatePost } from "./post.types";
+import { User } from "better-auth";
 
-const insertPostIntoDb = async (postinfo: TCreatePost): Promise<Post> => {
+const insertPostIntoDb = async (
+  postinfo: TCreatePost,
+  userinfo: User,
+): Promise<Post> => {
   const newPost = await prisma.post.create({
-    data: postinfo,
+    data: {
+      ...postinfo,
+      authorId: userinfo.id,
+    },
   });
   return newPost;
 };

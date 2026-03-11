@@ -3,8 +3,13 @@ import { auth } from "../lib/auth";
 import { fromNodeHeaders } from "better-auth/node";
 import sendResponse from "../util/sendResponse";
 
+export enum UserRole {
+  USER,
+  ADMIN,
+}
+
 const checkAuth =
-  (...roles: string[]) =>
+  (...roles: UserRole[]) =>
   async (req: Request, res: Response, next: NextFunction) => {
     const session = await auth.api.getSession({
       headers: fromNodeHeaders(req.headers),

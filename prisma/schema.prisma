@@ -70,12 +70,17 @@ model User {
   sessions      Session[]
   accounts      Account[]
 
-  role   String  @default("USER")
+  role   UserRole @default(USER)
   phone  String?
-  status String? @default("ACTIVE")
+  status String?  @default("ACTIVE")
 
   @@unique([email])
   @@map("user")
+}
+
+enum UserRole {
+  USER
+  ADMIN
 }
 
 model Session {
