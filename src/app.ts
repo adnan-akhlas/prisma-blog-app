@@ -6,7 +6,7 @@ import { auth } from "./lib/auth";
 const app: Application = express();
 
 app.use(express.json());
-app.all("/api/auth/*splat", toNodeHandler(auth));
+app.all("/api/v1/auth/*splat", toNodeHandler(auth));
 app.use("/api/v1", globalRouter);
 
 app.get("/", (req: Request, res: Response) => {
