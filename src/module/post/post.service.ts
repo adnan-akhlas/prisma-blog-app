@@ -32,6 +32,9 @@ const getPostsFromDb = async (queries: any): Promise<Post[]> => {
       ...(queries.featured && {
         isFeatured: JSON.parse(queries.featured),
       }),
+      ...(queries.status && {
+        status: queries.status.toUpperCase(),
+      }),
     },
   });
   return posts;
