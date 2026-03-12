@@ -35,6 +35,9 @@ const getPostsFromDb = async (queries: any): Promise<Post[]> => {
       ...(queries.status && {
         status: queries.status.toUpperCase(),
       }),
+      ...(queries.author && {
+        authorId: queries.author,
+      }),
     },
   });
   return posts;
