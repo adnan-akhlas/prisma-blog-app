@@ -2,11 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { auth } from "../lib/auth";
 import { fromNodeHeaders } from "better-auth/node";
 import sendResponse from "../util/sendResponse";
-
-export enum UserRole {
-  USER,
-  ADMIN,
-}
+import { UserRole } from "@prisma/client";
 
 const checkAuth =
   (...roles: UserRole[]) =>
@@ -32,7 +28,7 @@ const checkAuth =
       });
     }
 
-    if (!roles.includes(session.user.role)) {
+    if (!roles.includes(session.user.role as UserRole)) {
       return sendResponse(res, {
         status: 403,
         success: false,

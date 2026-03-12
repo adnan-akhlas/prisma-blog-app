@@ -1,8 +1,8 @@
+import { User } from "better-auth";
 import { Request, Response } from "express";
 import catchAsync from "../../util/catchAsync";
 import sendResponse from "../../util/sendResponse";
 import * as postService from "./post.service";
-import { User } from "better-auth";
 
 const createPost = catchAsync(
   async (req: Request, res: Response): Promise<void> => {

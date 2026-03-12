@@ -1,6 +1,7 @@
+import { UserRole } from "@prisma/client";
 import { Router } from "express";
+import checkAuth from "../../middleware/checkAuth";
 import * as postController from "./post.controller";
-import checkAuth, { UserRole } from "../../middleware/checkAuth";
 
 const router: Router = Router();
 
