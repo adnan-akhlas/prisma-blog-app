@@ -17,7 +17,6 @@ const insertPostIntoDb = async (
 };
 
 const getPostsFromDb = async (queries: any): Promise<Post[]> => {
-  console.log(queries);
   const posts = await prisma.post.findMany({
     where: {
       ...(queries?.q && {
@@ -26,6 +25,9 @@ const getPostsFromDb = async (queries: any): Promise<Post[]> => {
           { content: { contains: queries.q, mode: "insensitive" } },
           { tags: { has: queries.q } },
         ],
+      }),
+      ...(queries.tags && {
+        tags: { hasEvery: queries.tags.split(",") },
       }),
     },
   });
