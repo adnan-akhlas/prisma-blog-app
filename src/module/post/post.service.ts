@@ -29,6 +29,9 @@ const getPostsFromDb = async (queries: any): Promise<Post[]> => {
       ...(queries.tags && {
         tags: { hasEvery: queries.tags.split(",") },
       }),
+      ...(queries.featured && {
+        isFeatured: JSON.parse(queries.featured),
+      }),
     },
   });
   return posts;
