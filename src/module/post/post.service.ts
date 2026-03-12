@@ -21,7 +21,11 @@ const getPostsFromDb = async (queries: any): Promise<Post[]> => {
   const posts = await prisma.post.findMany({
     where: {
       ...(queries?.q && {
-        title: { contains: queries.q, mode: "insensitive" },
+        OR: [
+          { title: { contains: queries.q, mode: "insensitive" } },
+          { content: { contains: queries.q, mode: "insensitive" } },
+          { tags: { has: queries.q } },
+        ],
       }),
     },
   });
