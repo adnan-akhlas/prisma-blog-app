@@ -16,8 +16,15 @@ const insertPostIntoDb = async (
   return newPost;
 };
 
-const getPostsFromDb = async (): Promise<Post[]> => {
-  const posts = await prisma.post.findMany({});
+const getPostsFromDb = async (queries: any): Promise<Post[]> => {
+  console.log(queries);
+  const posts = await prisma.post.findMany({
+    where: {
+      ...(queries?.q && {
+        title: { contains: queries.q, mode: "insensitive" },
+      }),
+    },
+  });
   return posts;
 };
 
