@@ -9,7 +9,8 @@
     "prisma:reset": "prisma migrate reset",
     "prisma:generate": "prisma generate",
     "prisma:studio": "prisma studio",
-    "auth:generate": "pnpm dlx auth@latest generate"
+    "auth:generate": "pnpm dlx auth@latest generate",
+    "seed:admin": "tsx src/scripts/seedAdmin.ts"
   },
   "keywords": [],
   "type": "module",

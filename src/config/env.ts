@@ -11,6 +11,9 @@ interface IENV {
   NODEMAILER_PASS: string;
   GOOGLE_CLIENT_ID: string;
   GOOGLE_CLIENT_SECRET: string;
+  ADMIN_NAME: string;
+  ADMIN_EMAIL: string;
+  ADMIN_PASSWORD: string;
 }
 
 type TENV = keyof IENV;
@@ -26,6 +29,9 @@ const REQUIRED_ENV: TENV[] = [
   "NODEMAILER_PASS",
   "GOOGLE_CLIENT_ID",
   "GOOGLE_CLIENT_SECRET",
+  "ADMIN_NAME",
+  "ADMIN_EMAIL",
+  "ADMIN_PASSWORD",
 ];
 
 const checkEnv = (): IENV => {
