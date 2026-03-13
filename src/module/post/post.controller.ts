@@ -23,7 +23,7 @@ const getPosts = catchAsync(
   async (req: Request, res: Response): Promise<void> => {
     const queries = req.query as Record<string, string>;
     const paginationAndSorting = buildPaginationAndSorting(queries);
-    const data = await postService.getPostsFromDb(
+    const { data, meta } = await postService.getPostsFromDb(
       queries,
       paginationAndSorting,
     );
@@ -31,6 +31,7 @@ const getPosts = catchAsync(
       status: 200,
       success: true,
       message: "Posts retrieved successfully.",
+      meta,
       data,
     });
   },

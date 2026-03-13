@@ -20,7 +20,10 @@ const insertPostIntoDb = async (
 const getPostsFromDb = async (
   queries: Record<string, string>,
   { page, limit, skip, sortBy, sortOrder }: IPaginationAndSorting,
-): Promise<Post[]> => {
+): Promise<{
+  data: Post[];
+  meta: { page: number; limit: number; totalPages: number; totalPosts: number };
+}> => {
   const postFilterInput: Prisma.PostWhereInput = {
     ...(queries?.q && {
       OR: [
@@ -50,7 +53,16 @@ const getPostsFromDb = async (
       [sortBy]: sortOrder,
     },
   });
-  return posts;
+  const postsCount = await prisma.post.count({ where: postFilterInput });
+  return {
+    data: posts,
+    meta: {
+      page: page,
+      limit: limit,
+      totalPosts: postsCount,
+      totalPages: Math.ceil(postsCount / limit),
+    },
+  };
 };
 
 export { insertPostIntoDb, getPostsFromDb };
