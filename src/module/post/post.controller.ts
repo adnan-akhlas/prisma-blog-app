@@ -3,6 +3,7 @@ import { Request, Response } from "express";
 import catchAsync from "../../util/catchAsync";
 import sendResponse from "../../util/sendResponse";
 import * as postService from "./post.service";
+import buildPaginationAndSorting from "../../helper/buildPaginationAndSorting";
 
 const createPost = catchAsync(
   async (req: Request, res: Response): Promise<void> => {
@@ -20,8 +21,12 @@ const createPost = catchAsync(
 
 const getPosts = catchAsync(
   async (req: Request, res: Response): Promise<void> => {
-    const queries = req.query;
-    const data = await postService.getPostsFromDb(queries);
+    const queries = req.query as Record<string, string>;
+    const paginationAndSorting = buildPaginationAndSorting(queries);
+    const data = await postService.getPostsFromDb(
+      queries,
+      paginationAndSorting,
+    );
     sendResponse(res, {
       status: 200,
       success: true,
