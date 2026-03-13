@@ -10,6 +10,7 @@ router.post(
   checkAuth(UserRole.ADMIN, UserRole.USER),
   postController.createPost,
 );
-router.get("/", postController.getPosts);
+router.get("/", postController.getAllPosts);
+router.get("/:postId", postController.getSinglePost);
 
 export const postRouter = router;

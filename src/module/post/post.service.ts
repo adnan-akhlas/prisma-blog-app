@@ -65,4 +65,14 @@ const getPostsFromDb = async (
   };
 };
 
-export { insertPostIntoDb, getPostsFromDb };
+const getPostById = async (postId: string): Promise<Post | null> => {
+  const postData = await prisma.post.update({
+    where: { id: postId },
+    data: {
+      views: { increment: 1 },
+    },
+  });
+  return postData;
+};
+
+export { insertPostIntoDb, getPostsFromDb, getPostById };

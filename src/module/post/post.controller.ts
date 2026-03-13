@@ -19,7 +19,7 @@ const createPost = catchAsync(
   },
 );
 
-const getPosts = catchAsync(
+const getAllPosts = catchAsync(
   async (req: Request, res: Response): Promise<void> => {
     const queries = req.query as Record<string, string>;
     const paginationAndSorting = buildPaginationAndSorting(queries);
@@ -37,4 +37,15 @@ const getPosts = catchAsync(
   },
 );
 
-export { createPost, getPosts };
+const getSinglePost = catchAsync(async (req: Request, res: Response) => {
+  const { postId } = req.params;
+  const data = await postService.getPostById(postId as string);
+  sendResponse(res, {
+    status: 200,
+    success: true,
+    message: "Post retrieved sucessfully.",
+    data,
+  });
+});
+
+export { createPost, getAllPosts, getSinglePost };
