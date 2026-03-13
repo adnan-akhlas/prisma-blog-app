@@ -53,6 +53,8 @@ const seedAdmin = async (): Promise<void> => {
     console.log("Admin seed completed successfully.");
   } catch (error: unknown) {
     console.error(error);
+  } finally {
+    await prisma.$disconnect();
   }
 };
 
