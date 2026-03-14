@@ -16,4 +16,15 @@ const createComment = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-export { createComment };
+const getSingleComment = catchAsync(async (req: Request, res: Response) => {
+  const { commentId } = req.params;
+  const data = await commentService.getCommentById(commentId as string);
+  sendResponse(res, {
+    status: 201,
+    success: true,
+    message: "Comment retrieved successfully.",
+    data,
+  });
+});
+
+export { createComment, getSingleComment };

@@ -17,4 +17,12 @@ const insertCommentIntoDb = async (
   return data;
 };
 
-export { insertCommentIntoDb };
+const getCommentById = async (id: string): Promise<Comment | null> => {
+  const data = await prisma.comment.findUniqueOrThrow({
+    where: { id },
+    include: { post: { select: { id: true, title: true } } },
+  });
+  return data;
+};
+
+export { insertCommentIntoDb, getCommentById };
