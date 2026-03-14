@@ -52,6 +52,7 @@ const getPostsFromDb = async (
     orderBy: {
       [sortBy]: sortOrder,
     },
+    include: { _count: { select: { comments: true } } },
   });
   const postsCount = await prisma.post.count({ where: postFilterInput });
   return {
@@ -70,12 +71,22 @@ const getPostById = async (postId: string): Promise<Post | null> => {
     where: { id: postId },
     data: { views: { increment: 1 } },
     include: {
+      _count: { select: { comments: true } },
       comments: {
         where: { parentId: null, status: "APPROVED" },
+        orderBy: {
+          updatedAt: "desc",
+        },
         include: {
           replies: {
             where: { status: "APPROVED" },
-            include: { replies: { where: { status: "APPROVED" } } },
+            orderBy: { updatedAt: "asc" },
+            include: {
+              replies: {
+                where: { status: "APPROVED" },
+                orderBy: { updatedAt: "asc" },
+              },
+            },
           },
         },
       },
