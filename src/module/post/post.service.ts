@@ -68,8 +68,17 @@ const getPostsFromDb = async (
 const getPostById = async (postId: string): Promise<Post | null> => {
   const postData = await prisma.post.update({
     where: { id: postId },
-    data: {
-      views: { increment: 1 },
+    data: { views: { increment: 1 } },
+    include: {
+      comments: {
+        where: { parentId: null, status: "APPROVED" },
+        include: {
+          replies: {
+            where: { status: "APPROVED" },
+            include: { replies: { where: { status: "APPROVED" } } },
+          },
+        },
+      },
     },
   });
   return postData;
