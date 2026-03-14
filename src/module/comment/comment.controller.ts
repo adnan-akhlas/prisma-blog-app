@@ -20,11 +20,42 @@ const getSingleComment = catchAsync(async (req: Request, res: Response) => {
   const { commentId } = req.params;
   const data = await commentService.getCommentById(commentId as string);
   sendResponse(res, {
-    status: 201,
+    status: 200,
     success: true,
     message: "Comment retrieved successfully.",
     data,
   });
 });
 
-export { createComment, getSingleComment };
+const getCommentsByAuthor = catchAsync(async (req: Request, res: Response) => {
+  const { authorId } = req.params;
+  const data = await commentService.getCommentsByAuthor(authorId as string);
+  sendResponse(res, {
+    status: 200,
+    success: true,
+    message: "Comments retrieved successfully.",
+    data,
+  });
+});
+
+const deleteSingleComment = catchAsync(async (req: Request, res: Response) => {
+  const { id: userId } = req.user as User;
+  const { commentId } = req.params;
+  const data = await commentService.deleteCommentById(
+    commentId as string,
+    userId,
+  );
+  sendResponse(res, {
+    status: 200,
+    success: true,
+    message: "Comment deleted successfully.",
+    data,
+  });
+});
+
+export {
+  createComment,
+  getSingleComment,
+  getCommentsByAuthor,
+  deleteSingleComment,
+};

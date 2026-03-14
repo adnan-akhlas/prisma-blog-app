@@ -74,17 +74,15 @@ const getPostById = async (postId: string): Promise<Post | null> => {
       _count: { select: { comments: true } },
       comments: {
         where: { parentId: null, status: "APPROVED" },
-        orderBy: {
-          updatedAt: "desc",
-        },
+        orderBy: { createdAt: "desc" },
         include: {
           replies: {
             where: { status: "APPROVED" },
-            orderBy: { updatedAt: "asc" },
+            orderBy: { createdAt: "asc" },
             include: {
               replies: {
                 where: { status: "APPROVED" },
-                orderBy: { updatedAt: "asc" },
+                orderBy: { createdAt: "asc" },
               },
             },
           },

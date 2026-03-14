@@ -11,10 +11,10 @@ router.post(
   commentController.createComment,
 );
 
-router.get(
-  "/:commentId",
-  checkAuth(UserRole.ADMIN, UserRole.USER),
-  commentController.getSingleComment,
-);
+router.get("/author/:authorId", commentController.getCommentsByAuthor);
+
+router.get("/:commentId", commentController.getSingleComment);
+
+router.delete("/:commentId", commentController.deleteSingleComment);
 
 export { router as commentRouter };
